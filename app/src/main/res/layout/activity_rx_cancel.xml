@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--Close button-->
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_marginLeft="2dp"
+        android:padding="8dp"
+        app:srcCompat="@drawable/icon_toolbar_close"/>
+
+    <!--Start button-->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start"/>
+
+    <!--Cancel button-->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"/>
+
+    <!--Clear log button-->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_clear_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clear log"/>
+
+    <!--Stream log-->
+    <ScrollView
+        android:id="@+id/txt_log_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="false"
+        android:scrollbars="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+    </ScrollView>
+</android.support.v7.widget.LinearLayoutCompat>

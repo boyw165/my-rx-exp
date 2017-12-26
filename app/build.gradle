@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.my.exp.rx"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    lintOptions {
+        disable "MissingTranslation"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Google Support Library.
+    implementation rootProject.ext.dep.supportAppcompatV7
+    implementation rootProject.ext.dep.supportVectorDrawable
+    implementation rootProject.ext.dep.supportRecyclerViewV7
+    implementation rootProject.ext.dep.supportConstraintLayout
+    // Transition
+    implementation rootProject.ext.dep.supportTransition
+    // Multi-dex.
+    implementation rootProject.ext.dep.supportMultidex
+
+    // Dependency Injection.
+    implementation rootProject.ext.dep.dagger2
+//    implementation rootProject.ext.dep.dagger2Support
+    annotationProcessor rootProject.ext.dep.dagger2Compiler
+
+    // JSON.
+    implementation rootProject.ext.dep.gson
+
+    // Navigation.
+    implementation rootProject.ext.dep.cicerone
+
+    // Image loader.
+    implementation rootProject.ext.dep.glide
+
+    // View.
+    implementation rootProject.ext.dep.airbnbEpoxy
+
+    // RxKotlin.
+    implementation rootProject.ext.dep.rxKotlin
+    // Rx-Java.
+    implementation rootProject.ext.dep.rxJava
+    implementation rootProject.ext.dep.rxAndroid
+    // Rx-Binding.
+    implementation rootProject.ext.dep.rxBinding
+    // Rx-Permissions.
+    implementation rootProject.ext.dep.rxPermissions
+
+    // Unit tests.
+    testImplementation rootProject.ext.dep.testJunit
+    testImplementation rootProject.ext.dep.testMockito
+
+    // Instrumentation tests.
+    androidTestImplementation rootProject.ext.dep.testEspressoCore
+}

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Paper</string>
+
+    <!-- Common -->
+    <string name="loading">Loading</string>
+    <string name="yes">OK</string>
+    <string name="no">Cancel</string>
+    <string name="sample_dialog_title">Sample Title</string>
+    <string name="sample_dialog_message">Sample message</string>
+
+    <!-- For Sketch Editor -->
+    <string name="doodle_clear_title">Clear All</string>
+    <string name="doodle_clear_message">Clear all your strokes and it is not a reversible action. Are you sure to continue?</string>
+    <string name="doodle_clear_ok">OK</string>
+    <string name="doodle_clear_cancel">CANCEL</string>
+
+    <string name="tap_anywhere_to_start">Tap anywhere to start</string>
+    <string name="pick_exp">Pick An Experiment</string>
+</resources>
