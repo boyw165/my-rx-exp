@@ -36,17 +36,14 @@ class RxCancelPresenter(navigator: INavigator,
                         uiScheduler: Scheduler)
     : IPresenter<RxCancelContract.View> {
 
-    // Intents.
-    companion object {
-        val INTENT_OF_CANCEL_EVERYTHING = -1
-        val INTENT_OF_DO_SOMETHING = 0
-    }
-
     // Navigator.
     private val mNavigator = navigator
 
     // View
     private lateinit var mView: RxCancelContract.View
+
+    // Cancel signal.
+    private val mCancelSrc = PublishSubject.create<Any>()
 
     // Schedulers.
     private val mWorkerSchedulers = workerSchedulers
@@ -62,36 +59,34 @@ class RxCancelPresenter(navigator: INavigator,
     override fun bindViewOnCreate(view: RxCancelContract.View) {
         mView = view
 
-        // Start and cancel buttons:
-        //
-        //   start +
-        //          \
-        //           +----> something in between ----> end.
-        //          /
-        //  cancel +
+        // Long computation operation.
         mDisposablesOnCreate.add(
-            Observable
-                .merge(
-                    // Start button.
-                    mView.onClickStart()
-                        .debounce(150, TimeUnit.MILLISECONDS)
-                        .throttleFirst(1000, TimeUnit.MILLISECONDS)
-                        .map { _ -> INTENT_OF_DO_SOMETHING },
-                    // Cancel button.
-                    mView.onClickCancel()
-                        .debounce(150, TimeUnit.MILLISECONDS)
-                        .map { _ -> INTENT_OF_CANCEL_EVERYTHING })
-                // Create do-something intent or cancel intent.
-                .switchMap { intent ->
-                    when (intent) {
-                        INTENT_OF_DO_SOMETHING -> toShareAction()
-                        INTENT_OF_CANCEL_EVERYTHING -> toCancelAction()
-                        else -> toCancelAction()
-                    }
+            // Start button.
+            mView.onClickStart()
+                .debounce(150, TimeUnit.MILLISECONDS)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .switchMap { _ ->
+                    // First, switchMap convert the click to an action observable.
+                    // Whenever a new click is received, switchMap interrupt and
+                    // kills the existing ongoing observable and replace it with
+                    // the new one.
+                    // Second, subscribe to the action observable with a cancel
+                    // throttle where the takeUntil self terminates and also kill
+                    // the action observable when a cancel signal is received.
+                    toShareAction()
+                        .takeUntil(mCancelSrc)
                 }
                 .observeOn(mUiSchedulers)
                 .subscribe { _ ->
                     mView.printLog("all finished!")
+                })
+
+        // Cancel signal.
+        mDisposablesOnCreate.add(
+            mView.onClickCancel()
+                .debounce(150, TimeUnit.MILLISECONDS)
+                .subscribe { _ ->
+                    mCancelSrc.onNext(0)
                 })
 
         // Clear log button.

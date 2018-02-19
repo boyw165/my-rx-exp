@@ -59,8 +59,8 @@ class ExampleOfRxCancelActivity : AppCompatActivity(),
     // Presenter.
     private val mPresenter: RxCancelPresenter by lazy {
         RxCancelPresenter(this@ExampleOfRxCancelActivity,
-                                                 Schedulers.io(),
-                                                 AndroidSchedulers.mainThread())
+                          Schedulers.io(),
+                          AndroidSchedulers.mainThread())
     }
 
     // Subjects.

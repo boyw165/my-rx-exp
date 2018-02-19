@@ -79,6 +79,9 @@ class ExpListActivity : AppCompatActivity() {
                         }
                     }
                 })
+
+        // Actively show the menu.
+        mBtnExpMenu.show()
     }
 
     override fun onDestroy() {
